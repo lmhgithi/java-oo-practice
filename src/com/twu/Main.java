@@ -1,9 +1,8 @@
 package com.twu;
 
 import java.util.Scanner;
-
+import com.twu.MenuDisplay;
 public class Main {
-
     public static void main(String[] args) {
         while(true) {
             boolean mainExitFlag = false;
@@ -17,10 +16,7 @@ public class Main {
                 case "1"://管理员
                     boolean adminExitFlag = false;
                     while (true) {
-                        System.out.println("1.查看热搜排行榜");
-                        System.out.println("2.添加热搜");
-                        System.out.println("3.添加超级热搜");
-                        System.out.println("0.退出");
+                        MenuDisplay.adminDisplay();
                         String adminOp = sc.nextLine();
                         switch (adminOp) {
                             case "1":
