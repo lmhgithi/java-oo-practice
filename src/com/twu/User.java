@@ -19,7 +19,7 @@ public class User {
     }
 
     // 用户购买热搜
-    public boolean userBuyHotSearch(String name, int price, int no){
+    public boolean userBuyHotSearch(String name, Double price, int no){
         // 需求里没有说有余额的说法，但是为了结构合理还是在User中调用购买热搜
         return HotSearch.hotSearchBuyRank(name, price, no);
     }

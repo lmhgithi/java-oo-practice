@@ -5,20 +5,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class HotSearch implements Comparable<HotSearch>{
+    // 记录热搜排行
     static List<HotSearch> hotSearchList = new ArrayList<>();
-    static List<Integer> hotSearchRankingBuyPriceList = new ArrayList<>();
+    // 记录热搜购买位置对应的价格
+    static List<Double> hotSearchRankingBuyPriceList = new ArrayList<>();
 
     String hotSearchName;
     int hotSearchVotes;
     boolean isSupperHot;
-    int buyPrice;
+    Double buyPrice;
     int buyRankNo;
 
     HotSearch(String name){
         this.hotSearchName = name;
         this.hotSearchVotes = 0;
         this.isSupperHot = false;
-        this.buyPrice = 0;
+        this.buyPrice = 0.0;
+        // 设置默认值，便于排序
         this.buyRankNo = Integer.MAX_VALUE;
     }
 
@@ -52,7 +55,7 @@ public class HotSearch implements Comparable<HotSearch>{
         }
         HotSearch tmp = new HotSearch(name);
         hotSearchList.add(tmp);
-        hotSearchRankingBuyPriceList.add(0);
+        hotSearchRankingBuyPriceList.add(0.0);
         return true;
     }
 
@@ -82,8 +85,8 @@ public class HotSearch implements Comparable<HotSearch>{
     }
 
     // 购买热搜
-    public static boolean hotSearchBuyRank(String name, int price, int no){
-        if(hotSearchRankingBuyPriceList.get(no) > price){
+    public static boolean hotSearchBuyRank(String name, Double price, int no){
+        if(hotSearchRankingBuyPriceList.get(no) > price || price <= 0){
             return false;
         }
         hotSearchRankingBuyPriceList.set(no, price);

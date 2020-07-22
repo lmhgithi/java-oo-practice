@@ -61,8 +61,8 @@ public class Main {
                                 break;
                             case "3": //购买热搜
                                 hotSearchName = MenuDisplay.input("热搜名");
-                                int buyPrice = Integer.parseInt(MenuDisplay.input("购买金额"));
                                 int buyNo = Integer.parseInt(MenuDisplay.input("位置"));
+                                Double buyPrice = Double.parseDouble(MenuDisplay.input("购买金额"));
                                 MenuDisplay.successOrFail("购买", user.userBuyHotSearch(hotSearchName, buyPrice, buyNo));
                                 break;
                             case "4": //添加热搜
