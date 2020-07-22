@@ -1,36 +1,42 @@
 package com.twu;
 
 import java.util.Scanner;
-import com.twu.MenuDisplay;
+import com.twu.*;
+
 public class Main {
     public static void main(String[] args) {
+        String hotSearchName = "";
         while(true) {
             boolean mainExitFlag = false;
-            System.out.println("欢迎来到热搜排行榜，你是？");
-            System.out.println("1.管理员");
-            System.out.println("2.用户");
-            System.out.println("0.退出");
-            Scanner sc = new Scanner(System.in);
-            String user = sc.nextLine();
-            switch (user) {
+            String person = MenuDisplay.menuLogin();
+            switch (person) {
                 case "1"://管理员
+                    String adminName = MenuDisplay.input("用户名");
+                    String adminPassword = MenuDisplay.input("密码");
+                    boolean loginFlag = Admin.login(adminName, adminPassword);
+                    MenuDisplay.successOrFail("登录", loginFlag);
+                    if(!loginFlag){
+                        mainExitFlag = true;
+                        break;
+                    }
                     boolean adminExitFlag = false;
                     while (true) {
-                        MenuDisplay.adminDisplay();
-                        String adminOp = sc.nextLine();
+                        String adminOp = MenuDisplay.adminDisplay(Admin.adminName);
                         switch (adminOp) {
-                            case "1":
-                                System.out.println("ok");
+                            case "1": //查看热搜排行榜
+                                HotSearch.displayHotSearchRankingList();
                                 break;
-                            case "2":
-                                System.out.println("ok");
+                            case "2": //添加热搜
+                                hotSearchName = MenuDisplay.input("热搜名");
+                                MenuDisplay.successOrFail("添加热搜", HotSearch.addHotSearch(hotSearchName));
                                 break;
-                            case "3":
-                                System.out.println("ok");
+                            case "3": //添加超级热搜
+                                String supperHotSearchName = MenuDisplay.input("要升为超级热搜的名字");
+                                MenuDisplay.successOrFail("添加超级热搜", HotSearch.addToSupperHot(supperHotSearchName));
                                 break;
-                            case "0":
+                            case "0": //退出
                                 adminExitFlag = true;
-                                System.out.println("对话结束...");
+                                MenuDisplay.menuExit();
                                 break;
                         }
                         if (adminExitFlag) {
@@ -40,29 +46,32 @@ public class Main {
                     break;
                 case "2"://普通用户
                     boolean userExitFlag = false;
+                    String userName = MenuDisplay.input("用户名");
+                    User user = new User(userName);
                     while (true) {
-                        System.out.println("1.查看热搜排行榜");
-                        System.out.println("2.给热搜时间投票");
-                        System.out.println("3.购买热搜");
-                        System.out.println("4.添加热搜");
-                        System.out.println("0.退出");
-                        String adminOp = sc.nextLine();
+                        String adminOp = MenuDisplay.userDisplay(user.userName);
                         switch (adminOp) {
-                            case "1":
-                                System.out.println("ok");
+                            case "1": //查看热搜排行榜
+                                HotSearch.displayHotSearchRankingList();
                                 break;
-                            case "2":
-                                System.out.println("ok");
+                            case "2": //给热搜事件投票
+                                hotSearchName = MenuDisplay.input("热搜名");
+                                int voteNum = Integer.parseInt(MenuDisplay.input("投票数"));
+                                MenuDisplay.successOrFail("投票", user.userVoteToHotSearch(hotSearchName, voteNum));
                                 break;
-                            case "3":
-                                System.out.println("ok");
+                            case "3": //购买热搜
+                                hotSearchName = MenuDisplay.input("热搜名");
+                                int buyPrice = Integer.parseInt(MenuDisplay.input("购买金额"));
+                                int buyNo = Integer.parseInt(MenuDisplay.input("位置"));
+                                MenuDisplay.successOrFail("购买", user.userBuyHotSearch(hotSearchName, buyPrice, buyNo));
                                 break;
-                            case "4":
-                                System.out.println("ok");
+                            case "4": //添加热搜
+                                hotSearchName = MenuDisplay.input("热搜名");
+                                MenuDisplay.successOrFail("添加热搜", HotSearch.addHotSearch(hotSearchName));
                                 break;
-                            case "0":
+                            case "0": //退出
                                 userExitFlag = true;
-                                System.out.println("对话结束...");
+                                MenuDisplay.menuExit();
                                 break;
                         }
                         if (userExitFlag) {
@@ -70,9 +79,9 @@ public class Main {
                         }
                     }
                     break;
-                case "0":
+                case "0": //退出
                     mainExitFlag = true;
-                    System.out.println("对话结束...");
+                    MenuDisplay.menuExit();
             }
             if (mainExitFlag) {
                 break;
