@@ -1,6 +1,5 @@
 package com.twu;
 
-import java.util.List;
 // 只暂时管理一次登录累计投票数，不进行储存
 public class User {
     String userName;

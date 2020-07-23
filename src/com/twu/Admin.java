@@ -1,15 +1,15 @@
 package com.twu;
 
 public class Admin {
-    // 固定的用户名和密码登录，仅用于校验
-    static String adminName = "admin";
-    static String adminPassword = "admin123";
+    String adminName;
+    String adminPassword;
 
+    Admin(String name, String password){
+        this.adminName = name;
+        this.adminPassword = password;
+    }
     // 管理员登录
-    public static boolean login(String name, String password){
-        if(name.equals(adminName) && password.equals(adminPassword)){
-            return true;
-        }
-        return false;
+    public boolean login(String name, String password){
+        return name.equals(this.adminName) && password.equals(this.adminPassword);
     }
 }

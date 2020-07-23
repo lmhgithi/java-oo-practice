@@ -11,10 +11,10 @@ public class HotSearch implements Comparable<HotSearch>{
     static List<Double> hotSearchRankingBuyPriceList = new ArrayList<>();
 
     String hotSearchName;
-    int hotSearchVotes;
-    boolean isSupperHot;
-    Double buyPrice;
-    int buyRankNo;
+    private int hotSearchVotes;
+    private boolean isSupperHot;
+    private Double buyPrice;
+    private int buyRankNo;
 
     HotSearch(String name){
         this.hotSearchName = name;
@@ -29,7 +29,7 @@ public class HotSearch implements Comparable<HotSearch>{
     public static void displayHotSearchRankingList(){
         if(hotSearchList.isEmpty()){
             System.out.println("暂时没有热搜...");
-            System.out.println("");
+            System.out.println();
             return;
         }
         int ranking = 1;
@@ -41,18 +41,17 @@ public class HotSearch implements Comparable<HotSearch>{
                 preBuyNo = hs.buyRankNo;
             }
         }
-        System.out.println("");
+        System.out.println();
     }
 
     // 添加热搜
     public static boolean addHotSearch(String name){
-        if(hotSearchList != null) {
-            for (HotSearch hs : hotSearchList) {
-                if (hs.hotSearchName.equals(name)) {
-                    return false;
-                }
+        for (HotSearch hs : hotSearchList) {
+            if (hs.hotSearchName.equals(name)) {
+                return false;
             }
         }
+
         HotSearch tmp = new HotSearch(name);
         hotSearchList.add(tmp);
         hotSearchRankingBuyPriceList.add(0.0);
